@@ -79,6 +79,11 @@
 <body>
 
 <div class="container mt-5">
+    @if(session('register'))
+    <div class="alert alert-primary" role="alert">
+        {{session('register')}}
+      </div>
+    @endif
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card">
@@ -86,13 +91,14 @@
           <h3>Studrill Login</h3>
         </div>
         <div class="card-body">
-          <form>
+          <form action="{{ route('login.post') }}" method="POST">
+            @csrf
             <div class="form-group">
-              <input type="text" class="form-control" id="username" placeholder=" ">
+              <input type="text" class="form-control" id="username" name="username" placeholder=" ">
               <label for="username" class="floating-label">Username</label>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" id="password" placeholder=" ">
+              <input type="password" class="form-control" id="password" name="password" placeholder=" ">
               <label for="password" class="floating-label">Password</label>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Login</button>
