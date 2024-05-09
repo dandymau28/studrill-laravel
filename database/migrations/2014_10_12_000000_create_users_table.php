@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('user_type_id');
             $table->rememberToken();
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

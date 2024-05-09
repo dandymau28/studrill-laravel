@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('student_programme_id');
             $table->unsignedInteger('student_id');
             $table->unsignedInteger('programme_id');
+            $table->string('status');
             $table->timestamps();
         });
     }

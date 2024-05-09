@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('degree');
             $table->string('last_scholar');
             $table->string('photo');
+            $table->string('status');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

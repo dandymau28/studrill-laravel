@@ -17,7 +17,9 @@ return new class extends Migration
             $table->time('start_time');
             $table->time('end_time');
             $table->string('schedule_days');
+            $table->string('status');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

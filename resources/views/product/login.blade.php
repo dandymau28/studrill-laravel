@@ -1,115 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
+<!--
+* Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
+* @version 1.0.0-beta19
+* @link https://tabler.io
+* Copyright 2018-2023 The Tabler Authors
+* Copyright 2018-2023 codecalm.net Paweł Kuna
+* Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
+-->
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Educational Website Login</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom CSS -->
-  <style>
-    body {
-      background-color: #f5f5f5; /* Light Grey */
-    }
-    .card {
-      border: none;
-      border-radius: 15px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      background-color: #fff; /* White */
-    }
-    .card-header {
-      background-color: #feca57; /* Bright Yellow */
-      border-radius: 15px 15px 0 0;
-      text-align: center;
-      padding: 20px 0;
-      font-size: 24px;
-      color: #333; /* Dark Grey */
-    }
-    .form-group {
-      position: relative;
-    }
-    .form-control {
-      border: 1px solid #ccc; /* Light Grey */
-      border-radius: 10px;
-      margin-bottom: 20px;
-      transition: border-color 0.3s;
-      padding: 15px;
-      color: #333; /* Dark Grey */
-      background-color: #fff; /* White */
-    }
-    .form-control:focus {
-      border-color: #feca57; /* Bright Yellow */
-      box-shadow: 0 0 0 0.2rem rgba(254, 202, 87, 0.25); /* Bright Yellow Shadow */
-    }
-    .floating-label {
-      position: absolute;
-      pointer-events: none;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      transition: all 0.3s ease;
-      opacity: 0.5;
-      color: #555; /* Grey */
-    }
-    .form-control:focus + .floating-label,
-    .form-control:not(:placeholder-shown) + .floating-label {
-      transform: translate(-50%, -110%) scale(0.8);
-      font-size: 12px;
-      color: #555; /* Grey */
-      opacity: 1;
-    }
-    .btn-primary {
-      background-color: #feca57; /* Bright Yellow */
-      border: none;
-      border-radius: 10px;
-      padding: 10px 20px;
-      font-size: 18px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      color: #333; /* Dark Grey */
-    }
-    .btn-primary:hover {
-      background-color: #f0b531; /* Darker Yellow */
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-  </style>
-</head>
-<body>
+    <head>
+        @include('layouts.admin.head')
+    </head>
+    <body class="d-flex flex-column">
+        <script src="{{asset('js/demo-theme.min.js?1684106062')}}"></script>
+        <div class="page page-center">
+          <div class="container container-normal py-4">
+            <div class="row align-items-center g-4">
+              <div class="col-lg">
+                <div class="container-tight">
 
-<div class="container mt-5">
-    @if(session('register'))
-    <div class="alert alert-primary" role="alert">
-        {{session('register')}}
-      </div>
-    @endif
-  <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-header">
-          <h3>Studrill Login</h3>
-        </div>
-        <div class="card-body">
-          <form action="{{ route('login.post') }}" method="POST">
-            @csrf
-            <div class="form-group">
-              <input type="text" class="form-control" id="username" name="username" placeholder=" ">
-              <label for="username" class="floating-label">Username</label>
-            </div>
-            <div class="form-group">
-              <input type="password" class="form-control" id="password" name="password" placeholder=" ">
-              <label for="password" class="floating-label">Password</label>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                    @if ($errors->has('failed'))
+                    <div class="alert alert-danger" role="alert">
+                        <div class="d-flex">
+                          <div>
+                            <h4 class="alert-title">Sorry, can't login!&hellip;</h4>
+                            <div class="text-secondary">{{ $errors->first('failed') }}</div>
+                          </div>
+                        </div>
+                    </div>
+                    @endif
 
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+                  <div class="text-center mb-4">
+                    <a href="." class="navbar-brand navbar-brand-autodark"><img src="./static/logo.svg" height="36" alt=""></a>
+                  </div>
+                  <div class="card card-md">
+                    <div class="card-body">
+                      <h2 class="h2 text-center mb-4">Login to your account</h2>
+                      <form action="{{ route('login.post') }}" method="post">
+                        @csrf
+                        <div class="mb-3">
+                          <label class="form-label">Username</label>
+                          <input type="username" class="form-control" placeholder="Your_username" name="username" value="{{ old('username') }}">
+                        </div>
+                        <div class="mb-2">
+                          <label class="form-label">
+                            Password
+                            <span class="form-label-description">
+                              <a href="./forgot-password.html">I forgot password</a>
+                            </span>
+                          </label>
+                          <div class="input-group input-group-flat">
+                            <input type="password" class="form-control"  placeholder="Your password" name="password"  autocomplete="off">
+                            <span class="input-group-text">
+                              <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                              </a>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="form-footer">
+                          <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="text-center text-muted mt-3">
+                    Don't have account yet? <a href="./sign-up.html" tabindex="-1">Sign up</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg d-none d-lg-block">
+                <img src="{{asset('static/illustrations/undraw_secure_login_pdn4.svg')}}" height="300" class="d-block mx-auto" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Libs JS -->
+        <!-- Tabler Core -->
+        <script src="{{asset('js/tabler.min.js?1684106062')}}" defer></script>
+        <script src="{{asset('js/demo.min.js?1684106062')}}" defer></script>
+    </body>
 </html>
+
+

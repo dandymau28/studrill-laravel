@@ -21,7 +21,9 @@ return new class extends Migration
             $table->dateTime('birthdate');
             $table->string('institution');
             $table->string('address');
+            $table->string('status');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 

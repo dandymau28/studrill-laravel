@@ -51,16 +51,23 @@ class UserController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt([
+            'username' => $request->username,
+            'password' => $request->password,
+            'deleted_at' => function($query) {
+                $query->whereNull('deleted_at');
+            },
+            'user_type_id' => 1
+        ])) {
             $request->session()->regenerate();
 
             $student = Student::where('user_id', auth()->user()->user_id)->first();
-            dd($student);
+            return redirect('home');
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            'failed' => 'Username and password combinations are mismatch',
+        ])->onlyInput('username');
     }
 
     /**

@@ -20,7 +20,9 @@ return new class extends Migration
             $table->unsignedInteger('teacher_id');
             $table->date('start_date')->nullable();
             $table->date('finish_date')->nullable();
+            $table->string('status');
             $table->timestamps();
+            $table->timestamp('deleted_at')->nullable();
         });
     }
 
